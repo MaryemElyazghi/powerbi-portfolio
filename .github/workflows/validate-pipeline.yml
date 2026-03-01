@@ -40,6 +40,8 @@ jobs:
           python - <<'EOF'
           import pandas as pd
           df = pd.read_csv("data/incidents_qualite.csv", encoding="utf-8-sig", decimal=",")
+          df["Cout_Incident"] = pd.to_numeric(df["Cout_Incident"], errors="coerce")
+          df["Resolu"] = pd.to_numeric(df["Resolu"], errors="coerce")
           print(f"✅ Records     : {len(df):,}")
           print(f"✅ Columns     : {len(df.columns)}")
           print(f"✅ Date range  : {df['Date_Incident'].min()} → {df['Date_Incident'].max()}")
