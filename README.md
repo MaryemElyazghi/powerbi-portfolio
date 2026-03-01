@@ -1,6 +1,6 @@
 # 📊 Power BI Portfolio — Quality Incidents Analytics
 
-![CI](https://github.com/MaryemElyazghi/powerbi-portfolio/actions/workflows/validate-pipeline.yml/badge.svg)
+[![BI Pipeline — Data Quality Validation](https://github.com/MaryemElyazghi/powerbi-portfolio/actions/workflows/validate-pipeline.yml/badge.svg)](https://github.com/MaryemElyazghi/powerbi-portfolio/actions/workflows/validate-pipeline.yml)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![Power BI](https://img.shields.io/badge/Power%20BI-Service-yellow)
 ![License](https://img.shields.io/badge/license-MIT-green)
