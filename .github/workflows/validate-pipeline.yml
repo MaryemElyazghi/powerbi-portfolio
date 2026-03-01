@@ -1,0 +1,56 @@
+name: BI Pipeline — Data Quality Validation
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-data-quality:
+    name: Data Quality Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy faker openpyxl pytest pytest-cov
+
+      - name: Generate dataset
+        run: |
+          python data/generate_quality_data.py
+          echo "Dataset generated successfully"
+
+      - name: Run data quality tests
+        run: |
+          pytest tests/ -v --tb=short --cov=data --cov-report=term-missing
+
+      - name: Validate dataset statistics
+        run: |
+          python - <<'EOF'
+          import pandas as pd
+          df = pd.read_csv("data/incidents_qualite.csv", encoding="utf-8-sig", decimal=",")
+          print(f"✅ Records     : {len(df):,}")
+          print(f"✅ Columns     : {len(df.columns)}")
+          print(f"✅ Date range  : {df['Date_Incident'].min()} → {df['Date_Incident'].max()}")
+          print(f"✅ Regions     : {df['Region'].nunique()} ({', '.join(sorted(df['Region'].unique()))})")
+          print(f"✅ Resolution  : {df['Resolu'].mean()*100:.1f}% resolved")
+          print(f"✅ Avg cost    : {df['Cout_Incident'].mean():,.2f} MAD")
+          EOF
+
+      - name: Upload dataset artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: incidents-qualite-dataset
+          path: data/incidents_qualite.csv
+          retention-days: 7
