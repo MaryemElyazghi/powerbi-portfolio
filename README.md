@@ -66,6 +66,7 @@ Full incident log · Technician ranking (RANKX) · Back navigation button
 
 ![Global View](./01-reporting-qualite/screenshots/page1-vue-globale.png)
 ![Regional Analysis](./01-reporting-qualite/screenshots/page2-regions.png)
+![drill-through](01-reporting-qualite/screenshots/page3-drill-through.png)
 ![Power BI Service](./01-reporting-qualite/screenshots/powerbi-service-workspace.png)
 
 ---
